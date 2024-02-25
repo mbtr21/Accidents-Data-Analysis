@@ -3,9 +3,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.feature_selection import mutual_info_classif
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-from sklearn.datasets import make_blobs
 import pandas as pd
-import numpy as np
 
 
 class DataPreprocessor:
@@ -14,6 +12,9 @@ class DataPreprocessor:
 
     def set_index(self, index):
         self.data_frame.set_index(index, inplace=True)
+
+    def drop_columns(self, columns):
+        self.data_frame.drop(columns=columns, inplace=True)
 
     def na_handler(self, args=None):
         if args is not None:
