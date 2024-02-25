@@ -26,7 +26,7 @@ if __name__ == '__main__':
     data_preprocessor.standardization(columns=data_preprocessor.data_frame.columns)
     feature_engineering = FeatureSelector(data_preprocessor.data_frame)
     feature_engineering.extend_data_by_k_means(features=feature_engineering.data_frame.columns
-                                               , numbers_of_cluster=[3, 5, 7, 9])
+                                               , numbers_of_cluster=[3])
     feature_engineering.reduction_dimension_by_pca(scaled_columns=feature_engineering.data_frame.columns
                                                    , handel='return', index='accident_index')
     shape = feature_engineering.data_frame.shape
@@ -35,12 +35,9 @@ if __name__ == '__main__':
     features = feature_engineering.data_frame.loc[:, list(features.index)]
     svm = SvmClassifier()
     svm.set_train_test(features, target, test_size=0.3, random_state=42)
-    svm.train_model(kernel='linear')
+    svm.train_model(kernel='linear', C=0.3)
     svm.result_model()
-    print("Result of the t_test for gender is ", gender_t_test)
-    print("Result of the anova_score for type of casualty is ", anova_test_f_value.pvalue)
-    data = pd.read_csv('new_data.csv')
-    dashboard = RoadAccidentDashboard(data=data)
-    dashboard.setup_layout()
-    dashboard.register_callbacks()
-    dashboard.app.run_server(debug=False)
+    print("The p_value of the t_test between mean of casualty of male and female  ", gender_t_test_pvalue)
+    print("The f_value of the anova_test for type of casualty is ", anova_test_f_value)
+
+
