@@ -2,7 +2,7 @@ import pandas as pd
 from hypothesis_tests import HypothesisTests
 from preprocess import DataPreprocessor, FeatureSelector
 from predictor import SvmClassifier
-from dashboard import RoadAccidentDashboard
+
 
 if __name__ == '__main__':
     df = pd.read_csv('data.csv')
