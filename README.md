@@ -29,6 +29,7 @@ Data Preprocessing: Cleans and prepares data for analysis, including encoding, f
 Hypothesis Testing: Performs statistical tests to analyze data features and relationships.
 Predictive Modeling: Utilizes a Support Vector Machine (SVM) model for making predictions.
 Interactive Dashboard: Visualizes data and analysis results interactively using Dash and Plotly
+Dashboard : A simple pdf of dashboard 
 
 ## Dependencies
 - Python 3.x
