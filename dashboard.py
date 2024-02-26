@@ -1,4 +1,5 @@
 import dash
+import pandas as pd
 from dash import dcc, html
 import plotly.express as px
 
@@ -12,18 +13,6 @@ class AccidentRoadDashboard:
         self.kpi = kpi
         self.app = dash.Dash(__name__)
         self.setup_layout()
-
-    def pre_process(self):
-        self.dataframe['sex_of_casualty'] = self.dataframe['sex_of_casualty'].replace(1, 'male')
-        self.dataframe['sex_of_casualty'] = self.dataframe['sex_of_casualty'].replace(2, 'female')
-        self.dataframe = self.dataframe[(self.dataframe['sex_of_casualty'] == 'male') |
-                                        (self.dataframe['sex_of_casualty'] == 'female')]
-        self.dataframe['casualty_severity'] = self.dataframe['casualty_severity'].replace(1, 'fatal')
-        self.dataframe['casualty_severity'] = self.dataframe['casualty_severity'].replace(2, 'serious')
-        self.dataframe['casualty_severity'] = self.dataframe['casualty_severity'].replace(3, 'slight')
-        self.dataframe = self.dataframe[(self.dataframe['sex_of_casualty'] == 'fatal') |
-                                        (self.dataframe['sex_of_casualty'] == 'serious') |
-                                        (self.dataframe['sex_of_casualty'] == 'slight')]
 
     def setup_layout(self):
         df_heatmap = self.dataframe[['pedestrian_location', 'pedestrian_movement', 'casualty_severity']]
@@ -45,7 +34,7 @@ class AccidentRoadDashboard:
 
         # Bar Plot
         bar_fig = px.bar(self.dataframe, x='casualty_severity', y='car_passenger', color='sex_of_casualty',
-                         barmode='group')
+                         )
         bar_fig.update_layout(paper_bgcolor='rgba(0, 0, 0, 0)', plot_bgcolor='rgba(0, 0, 0, 0)')
 
         self.app.layout = html.Div(children=[
@@ -53,12 +42,15 @@ class AccidentRoadDashboard:
 
             html.Div(children=[
                 # Sub-divs for KPIs, displayed inline
-                html.Div([html.H1(f"The p_value of the t_test between mean of casualty of male and female: {self.t_test}")],
-                         style={'display': 'inline-block', 'margin': '10px'}),
+                html.Div([html.H1(f" P_value of t_test between mean of casualty of genders: {self.t_test}")],
+                         style={'display': 'inline-block', 'margin': '12px', 'font-size: 16px'
+                                'font-family': 'Roboto, sans-serif', 'color': 'rgba(102, 0, 51, 0.5)'}),
                 html.Div([html.H1(f"The f_value of the anova_test for type of casualty is: {self.anova_test}")],
-                         style={'display': 'inline-block', 'margin': '10px'}),
+                         style={'display': 'inline-block', 'margin': '12px', 'font-size: 16px'
+                                'font-family': 'Roboto, sans-serif', 'color': 'rgba(102, 0, 51, 0.5)'}),
                 html.Div([html.H1(f"f1 score of model is  : {self.kpi}")],
-                         style={'display': 'inline-block', 'margin': '10px'}),
+                         style={'display': 'inline-block', 'margin': '12px', 'font-size: 16px'
+                                'font-family': 'Roboto, sans-serif', 'color': 'rgba(102, 0, 51, 0.5)'}),
             ], style={'display': 'flex', 'justify-content': 'space-around'}),
             html.Div(children=[
                 dcc.Graph(figure=heatmap_fig),
@@ -74,8 +66,8 @@ class AccidentRoadDashboard:
         ], style={'backgroundColor': 'rgba(224, 224, 224, 0.5)'})
 
     def run(self):
-            # Method to run the server
-            if __name__ == '__main__':
-                self.app.run_server(debug=True)
+        # Method to run the server
+        if __name__ == '__main__':
+            self.app.run_server(debug=True)
 
 
