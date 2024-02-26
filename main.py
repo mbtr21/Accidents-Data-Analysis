@@ -2,7 +2,7 @@ import pandas as pd
 from hypothesis_tests import HypothesisTests
 from preprocess import DataPreprocessor, FeatureSelector
 from predictor import SvmClassifier
-
+from dashboard import AccidentRoadDashboard
 
 if __name__ == '__main__':
     df = pd.read_csv('data.csv')
@@ -21,6 +21,7 @@ if __name__ == '__main__':
     pedestrian = data_preprocessor.data_frame.loc[data_preprocessor.data_frame['casualty_class'] == 3]['casualty_severity']
     anova_test = hypothesis_test.anova_test(data_groups=[driver, passenger, pedestrian])
     anova_test_f_value = anova_test.pvalue
+    dash_data = data_preprocessor.data_frame.copy()
     # data_preprocessor.data_frame.to_csv('new_data.csv')
     target = data_preprocessor.data_frame.pop('casualty_severity')
     data_preprocessor.standardization(columns=data_preprocessor.data_frame.columns)
@@ -36,8 +37,14 @@ if __name__ == '__main__':
     svm = SvmClassifier()
     svm.set_train_test(features, target, test_size=0.3, random_state=42)
     svm.train_model(kernel='linear', C=0.3)
-    svm.result_model()
-    print("The p_value of the t_test between mean of casualty of male and female  ", gender_t_test_pvalue)
-    print("The f_value of the anova_test for type of casualty is ", anova_test_f_value)
+    f1_score = svm.result_model()[0]
+   # print("The p_value of the t_test between mean of casualty of male and female  ", gender_t_test_pvalue)
+   # print("The f_value of the anova_test for type of casualty is ", anova_test_f_value)
+    dashboard = AccidentRoadDashboard(t_test=gender_t_test, anova_test=anova_test_f_value
+                                      , df=dash_data, kpi=f1_score)
+    dashboard.pre_process()
+    dashboard.run()
+
+
 
 
