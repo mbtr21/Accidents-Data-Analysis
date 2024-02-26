@@ -1,5 +1,4 @@
 import dash
-import pandas as pd
 from dash import dcc, html
 import plotly.express as px
 
@@ -28,7 +27,7 @@ class AccidentRoadDashboard:
         pie_fig1.update_layout(paper_bgcolor='rgba(0, 0, 0, 0)', plot_bgcolor='rgba(0,0,0,0)')
 
         # Pie Chart 2
-        pie_fig2 = px.pie(self.dataframe, values='accident_index', names='casualty_severity',
+        pie_fig2 = px.pie(self.dataframe, values='accident_index', names='casualty_class',
                           title='Percent of Class Casualties')
         pie_fig2.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
 
@@ -43,14 +42,14 @@ class AccidentRoadDashboard:
             html.Div(children=[
                 # Sub-divs for KPIs, displayed inline
                 html.Div([html.H1(f" P_value of t_test between mean of casualty of genders: {self.t_test}")],
-                         style={'display': 'inline-block', 'margin': '12px', 'font-size: 16px'
-                                'font-family': 'Roboto, sans-serif', 'color': 'rgba(102, 0, 51, 0.5)'}),
+                         style={'display': 'inline-block', 'margin': '20px', 'font-size: 16px'
+                                'font-family': 'Hello Stockholm, sans-serif', 'color': 'rgba(102, 0, 51, 0.5)'}),
                 html.Div([html.H1(f"The f_value of the anova_test for type of casualty is: {self.anova_test}")],
-                         style={'display': 'inline-block', 'margin': '12px', 'font-size: 16px'
-                                'font-family': 'Roboto, sans-serif', 'color': 'rgba(102, 0, 51, 0.5)'}),
+                         style={'display': 'inline-block', 'margin': '20px', 'font-size: 16px'
+                                'font-family': 'Hello Stockholm, sans-serif', 'color': 'rgba(102, 0, 51, 0.5)'}),
                 html.Div([html.H1(f"f1 score of model is  : {self.kpi}")],
-                         style={'display': 'inline-block', 'margin': '12px', 'font-size: 16px'
-                                'font-family': 'Roboto, sans-serif', 'color': 'rgba(102, 0, 51, 0.5)'}),
+                         style={'display': 'inline-block', 'margin': '20px', 'font-size: 16px'
+                                'font-family': 'Hello Stockholm, sans-serif', 'color': 'rgba(102, 0, 51, 0.5)'}),
             ], style={'display': 'flex', 'justify-content': 'space-around'}),
             html.Div(children=[
                 dcc.Graph(figure=heatmap_fig),

@@ -14,6 +14,7 @@ This project aims to analyze and predict outcomes based on a dataset, focusing o
 - [Dependencies](#dependencies)
 
 
+
 ## Installation
 
 To set up the project environment, follow these steps:
